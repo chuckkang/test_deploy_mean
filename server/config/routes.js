@@ -4,11 +4,11 @@ var path = require('path');
 // var Survey = mongoose.model('surveys');
 module.exports = function Route(app){
 app.get("/", controller.index),
-app.get("/questions", controller.all), //allrecords
-app.get("/allanswers/:questionid", controller.questionandanswers),
-app.put("/updatevote", controller.updatevote),
-app.get("/data", controller.data), //add data to the db
+app.get("/all", controller.all), //showall appointments
+// app.get("/allanswers/:questionid", controller.questionandanswers),
+app.post("/add/new", controller.add),
 app.delete("/delete/:id", controller.delete),
+app.get("/data", controller.data), //add data to the db
 // app.post("/question/add", controller.add),
 // app.get("/question/:id", controller.getone),
 // app.post("/answer/add", controller.addanswer),

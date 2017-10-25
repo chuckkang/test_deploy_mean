@@ -24,15 +24,18 @@ export class DeleteComponent implements OnInit {
 	// 	// this._api.deleteQuestion
 	//   }
 	  this._activatedRoute.paramMap.subscribe(params => {
-		  this.id = params.get("questionid");
-				// console.log("id", this.id);
-				this._api.deleteQuestion({_id: this.id}, (error)=>{
-					if (error){
-						console.log(error, "error in the delete component");
-						this.errMessage = error;
+		  this.id = params.get("id");
+				console.log("id", this.id);
+				this._api.deleteAppointment({_id: this.id}, 
+					(err)=>{
+						this.errMessage = err;
+						// console.log("ASDFASDDSF")
+					}, (results)=>{
+						this._router.navigate(['/dashboard']);
 					}
-				})
-				
+					
+				)
+				this._router.navigateByUrl('/dashboard');
 		})
   }
 

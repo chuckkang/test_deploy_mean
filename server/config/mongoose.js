@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var fs = require('fs');
 var path = require("path")
 // change the db to the correct db
-mongoose.connect('mongodb://localhost/mean_final_2'); // add new db here
+mongoose.connect('mongodb://localhost/mean_final_3'); // add new db here
 var models_path = path.join(__dirname, '../models');
 // mongoose.Promise = global.Promise;
 

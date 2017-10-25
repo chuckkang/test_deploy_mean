@@ -1,7 +1,6 @@
 
 var mongoose = require("mongoose");
-var QuestionsDB = mongoose.model('Question');
-var AnswerDB = mongoose.model('Answer');
+var AppointmentDB = mongoose.model('Appointment');
 
 
 module.exports = {
@@ -35,11 +34,12 @@ module.exports = {
 	},
 
 	add: function(req, res){
-		var newquestion = new QuestionsDB(req.body);
-		newquestion.save((err)=>{
+		console.log(req.body)
+		var newappointment = new AppointmentDB(req.body);
+		newappointment.save((err)=>{
 			if (err) {
 				console.log(err)
-				res.json({ message: "err" })
+				res.json({ message: "Error inserting record" })
 			}
 			else{
 				res.json({message: "success"})
@@ -48,7 +48,8 @@ module.exports = {
 	},
 
 	all: (req, res) =>{
-		QuestionsDB.find({}, function(err, results){
+		var currentDate = new Date();
+		AppointmentDB.find({}, function(err, results){
 			if (err){
 				console.log(err)
 			}else{
@@ -59,89 +60,79 @@ module.exports = {
 		)
 	}, 
 
-	getone: (req, res) => {
-		QuestionsDB.find({_id: req.params.id}, function (err, results) {
-			if (err) {
-				console.log(err)
-			} else {
-				res.json(results);
-				console.log(results);
-			}
-		}
-		)
-	},
+	// getone: (req, res) => {
+	// 	// QuestionsDB.find({_id: req.params.id}, function (err, results) {
+	// 	// 	if (err) {
+	// 	// 		console.log(err)
+	// 	// 	} else {
+	// 	// 		res.json(results);
+	// 	// 		console.log(results);
+	// 	// 	}
+	// 	// }
+	// 	// )
+	// },
 
-	addanswer: (req, res) => {
-		var newanswer = new AnswerDB(req.body)
-		newanswer.save(function (err) {
-			if (err) {
-				console.log(err)
-			} else {
-				res.json({message: "success"});
-			}
-		}
-		)
-	}, 
+	// addanswer: (req, res) => {
+	// 	// var newanswer = new AnswerDB(req.body)
+	// 	// newanswer.save(function (err) {
+	// 	// 	if (err) {
+	// 	// 		console.log(err)
+	// 	// 	} else {
+	// 	// 		res.json({message: "success"});
+	// 	// 	}
+	// 	// }
+	// 	// )
+	// }, 
 
-	questionandanswers: (req, res) => {
+	// questionandanswers: (req, res) => {
+	// 	// console.log({_id: req.params.questionid}, "THIS IS ID from the question and answers router");
+	// 	// QuestionsDB.findOne({ _id: req.params.questionid}).populate('answers').exec( function (err, results) {
+	// 	// 	if (results) {
+	// 	// 		//console.log(results, "WAHT IS Results")
+	// 	// 		res.json(results);
+	// 	// 	} else {
+	// 	// 		console.log(err, "No record found");
+	// 	// 	}
+	// 	// }
+	// 	// )
+	// },
+
+	delete: (req, res) => {
 		// console.log({_id: req.params.questionid}, "THIS IS ID from the question and answers router");
-		QuestionsDB.findOne({ _id: req.params.questionid}).populate('answers').exec( function (err, results) {
-			if (results) {
-				//console.log(results, "WAHT IS Results")
-				res.json(results);
-			} else {
-				console.log(err, "No record found");
-			}
-		}
-		)
-	},
-
-	delete: (req, res, next) => {
-		// console.log({_id: req.params.questionid}, "THIS IS ID from the question and answers router");
-		// trickle down remove.		
-		console.log(req.params.id);
+		// console.log(req.params.id);
 		// res.json({message: "on server"})
-		QuestionsDB.remove({ _id: req.params.id }, function (err) {
+		AppointmentDB.remove({ _id: req.params.id }, function (err) {
 			if (err) {
-				res.json({message: "error removing parent"});
+				res.json(err)
 			} else {
-				AnswerDB.remove({ _question: req.params.id }, function (err) {
-					if (err) {
-						res.json({ message: "error removing child" });
-					} else {
-						res.json({ message: "Delete Success" });
-					}
-				});
+				console.log("successful removal");
 			}
 		});
-
-		
-
 	},
 
-	updatevote: (req, res) => {
-		// console.log(req.body.likes, "THIS IS TEH RqewrWSESTULS");
-		AnswerDB.update({_id: req.body._id}, 
-			{likes: parseInt(req.body.likes)}, function (err, results) {
-			if (err) {
-				console.log(err)
-			} else {
-				res.json(results);
-				// console.log(results, "*************");
-			}
-		}
-		)
-	},
-	updatelike: (req, res) => {
-		AnswerDB.update({ _id: req.body.answerid }, {
-			likes: parseInt(req.body.likes),
-		}, function (err) {
-			if (err) {
-				console.log(err)
-			} else {
-				res.json({ message: "success" });
-			}
-		}
-		)
-	}, 
+	// updatevote: (req, res) => {
+	// 	// console.log(req.body.likes, "THIS IS TEH RqewrWSESTULS");
+	// // 	AnswerDB.update({_id: req.body._id}, 
+	// // 		{likes: parseInt(req.body.likes)}, function (err, results) {
+	// // 		if (err) {
+	// // 			console.log(err)
+	// // 		} else {
+	// // 			res.json(results);
+	// // 			// console.log(results, "*************");
+	// // 		}
+	// // 	}
+	// // 	)
+	// },
+	// updatelike: (req, res) => {
+	// 	// AnswerDB.update({ _id: req.body.answerid }, {
+	// 	// 	likes: parseInt(req.body.likes),
+	// 	// }, function (err) {
+	// 	// 	if (err) {
+	// 	// 		console.log(err)
+	// 	// 	} else {
+	// 	// 		res.json({ message: "success" });
+	// 	// 	}
+	// 	// }
+	// 	// )
+	// }, 
 }

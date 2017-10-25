@@ -1,20 +1,22 @@
-<p>
-  dashboard works!
-</p>
+
+	<a [routerLink]="['/dashboard']">All Appointments</a> --
+	<a [routerLink]="['/add']">Add New Appointment</a>
+	<a [routerLink]="['/logout']">Logout</a>
+
 <!-- {{ allData | json}} -->
-<table>
+<table border="1" align="center" width="100%">
 	<tr>
-		<th></th>
-		<th></th>
-		<th></th>
-		<th></th>
+		<th>Date</th>
+		<th>Time</th>
+		<th>Patient Name</th>
+		<th>Complaint</th>
 		<th></th>
 	</tr>
-	<tr *ngFor="let question of allData; let i = index">
-		<td>{{question.question}}</td>
-		<td>{{question.description}}</td>
-		<td>{{question.createdAt | date:'fullDate'}}</td>
-		<td>{{question.updatedAt| date:'shortDate'}}</td>
-		<td><a [routerLink]="['/delete', question._id]">delete</a></td>
+	<tr *ngFor="let appointment of allData; let i = index">
+		<td>{{appointment.apptdate}}</td>
+		<td>{{appointment.appttime}}</td>
+		<td>{{appointment.name}}</td>
+		<td>{{appointment.complaint}}</td>
+		<td><a [routerLink]="['/delete', appointment._id]" *ngIf="appointment.name==username">delete</a></td>
 	</tr>
 </table>

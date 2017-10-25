@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
 	  console.log("onsubmit()")
 	  this._api.login(this.username, (success)=>{
 		//console.log("logged in:", success);
+		console.log(this.username, "username")
 		this._route.navigate(['/dashboard']);
 	  });
 	  

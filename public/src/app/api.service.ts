@@ -5,31 +5,44 @@ import 'rxjs/Rx';
 @Injectable()
 export class ApiService {
 	data=[];
-	allQuestions=[];
+	allAppointments=[];
 	allAnswers = [];
 	val=[];
 	username='';
 	constructor(private _http: Http) {
 		//loading initial in constructor.
+		this.getAll((results)=>{});
+		
 	 }
+	 // THESE IS A CREATEITEM METHOD IN OUR SERVICE
+	add(item, callback, errorback) {
+		this._http.post('/add/new', item).subscribe( 
+		(response) => { 
+			callback(response.json());
+		},
+		(error) => { 
+			errorback(error.json());
+		}
+		);
+	}
 
   getAll(callback){
-	  this._http.get("/questions").subscribe(
+	  this._http.get("/all").subscribe(
 		(response)=>{
-			this.allQuestions = response.json();
+			this.allAppointments = response.json();
 			// this section is only to reformat the date//
 			// it is possible to just update initially inserting in to database?
-			// for (let count = 0; count < this.allQuestions.length; count++){
-			// 	var ndate = this.allQuestions[count].createdAt;
+			// for (let count = 0; count < this.allAppointments.length; count++){
+			// 	var ndate = this.allAppointments[count].apptdate;
 			// 	var strdate = new Date(ndate);
-			// 	this.allQuestions[count].createdAt = strdate;
+			// 	this.allAppointments[count].apptdate = strdate;
 
-			// 	var ndate = this.allQuestions[count].updatedAt;
+			// 	var ndate = this.allAppointments[count].updatedAt;
 			// 	var strdate = new Date(ndate);
-			// 	this.allQuestions[count].updatedAt = strdate;
+			// 	this.allAppointments[count].updatedAt = strdate;
 			// }
 			
-			callback(this.allQuestions)
+			callback(this.allAppointments)
 		},
 		(error)=>{
 			// console.log(error, "---	 Error in GetAll servicasdfeasdfasdf");
@@ -38,6 +51,9 @@ export class ApiService {
 	)
   }
 
+  getAllAppointments(){
+	  return this.allAppointments;
+  }
   getAllAnswers(questionid, callback) {
 	  this._http.get("/allanswers/" + questionid).subscribe(
 		  (response) => {
@@ -89,39 +105,34 @@ export class ApiService {
 	  })
   }
 
-  deleteQuestion(formData, results){
+  deleteAppointment(formData, results, err){
 	  this._http.delete("/delete/"+formData._id).subscribe(
 		  (results)=>{
-			  console.log(results, " The delete was successful")
+			  console.log("success delete in service")
 		  },
-		  (error)=>{
-			  console.log(error, " there was an error")
+		(err)=>{
+			  console.log(err, " The delete was err")
 		  }
 	  )
   }
   login(username: string, callback){
 	  this.username = username;
-	  callback("success");
+	  //temp name:
+	  console.log(this.username, "IN SERVER")
+	  callback(this.username);
   }
   logout(){
 	  this.username = '';
+  }
+  getUser(){
+	  return this.username;
   }
 }
 
 // ```
 // // ==== SERVICE SIDE =====
 
-// // THESE IS A CREATEITEM METHOD IN OUR SERVICE
-// createItem(item, callback, errorback) {
-//     this._http.post('/item/new', item).subscribe( 
-//       (response) => { 
-//         callback(response.json());
-//        },
-//       (error) => { 
-//         errorback(error.json());
-//        }
-//     );
-// }
+
 
 // // THIS IS A SHOWITEM METHOD IN OUR SERVICE
 // showItems(callback, errorback) {

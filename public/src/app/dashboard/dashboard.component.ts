@@ -13,8 +13,9 @@ allData=[];
 single=[];
 sub=[];
 somevalue;
+username:string;
 	constructor(private _route: Router, private _api: ApiService) {
-		
+		this.username = this._api.getUser();
 	 }
 
   ngOnInit() {
@@ -22,12 +23,12 @@ somevalue;
 	 if(this._api.username==''){
 		 this._route.navigate(['/']);
 	 }else{
-		 this._api.getAll((data)=>{
-			 this.allData = data;
-		 });
-	 }
-
-
+			  this._api.getAll((data) => {
+		this.allData = data;
+		console.log(this.allData, "THIs IS ALL DATA")
+	});
+		  
+	 
   }
+  }}
 
-}

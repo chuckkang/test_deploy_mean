@@ -9,6 +9,8 @@ import { ApiService } from './api.service';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DeleteComponent } from './delete/delete.component';
+import { AddComponent } from './add/add.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { DeleteComponent } from './delete/delete.component';
     MainComponent,
     LoginComponent,
     DashboardComponent,
-    DeleteComponent
+    DeleteComponent,
+    AddComponent,
+    LogoutComponent
   ],
   imports: [
 	BrowserModule,
