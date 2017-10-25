@@ -1,0 +1,9 @@
+
+<div>
+	 {{ username | json}}
+	<form name="formData" #formData='ngForm' (submit)='onSubmit()'>
+	username: <input type="text" name="username" required minlength='2' [(ngModel)]='username'>
+			<input type="submit" ng-disabled="false" *ngIf="formData.valid">
+	<label *ngIf="!username.valid">Please enter more than 2 characters.</label>
+	</form>
+</div>

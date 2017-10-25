@@ -1,0 +1,14 @@
+<p>
+  main works! adfsa asdf
+</p>
+{{ arrAnswers | json}}
+
+
+<div *ngFor="let likes of arrAnswers; let idx = index">
+	user: {{ likes.user }}<br>
+	desc: {{ likes.answer }}<br>
+	 likes: {{ likes.likes }}
+	<button (click)="like(idx)">Like</button>
+	 <hr>
+	<br>
+</div>

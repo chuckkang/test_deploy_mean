@@ -1,0 +1,20 @@
+<p>
+  dashboard works!
+</p>
+<!-- {{ allData | json}} -->
+<table>
+	<tr>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	<tr *ngFor="let question of allData; let i = index">
+		<td>{{question.question}}</td>
+		<td>{{question.description}}</td>
+		<td>{{question.createdAt | date:'fullDate'}}</td>
+		<td>{{question.updatedAt| date:'shortDate'}}</td>
+		<td><a [routerLink]="['/delete', question._id]">delete</a></td>
+	</tr>
+</table>
